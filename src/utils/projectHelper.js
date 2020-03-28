@@ -1,5 +1,6 @@
 const fs = require('fs');
 const path = require('path');
+const assign = require('object-assign');
 
 const cwd = process.cwd(); // 方法返回 Node.js 进程的当前工作目录
 
@@ -13,11 +14,15 @@ const defaultProjectConfig = {
   compileTs: false, // 默认不编译 tsconfig.json配置在根目录
   dist: {
     finalize: () => {} // 最后补充dist
+  },
+  compile: {
+    finalize: () => {} // 最后补充compile
   }
 }
 
 function getProjectPath(...filePath) {
-  return path.join(cwd, ...filePath);
+  const ss = path.join(cwd, ...filePath);
+  return ss;
 }
 
 function resolve(moduleName) {
@@ -50,13 +55,13 @@ function injectRequire() {
 }
 
 function getConfig() {
-  const configPath = getProjectPath('.fire-tools.config.js');
+  const configPath = getProjectPath('fire-tools.config.js');
   if (fs.existsSync(configPath)) {
     const config = require(configPath);
-    return Object.assign({}, config, defaultProjectConfig);
+    return assign(defaultProjectConfig, config);
   }
 
-  return {};
+  return defaultProjectConfig;
 }
 
 module.exports = {

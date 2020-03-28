@@ -28,18 +28,20 @@
  *      ┗┻┛   ┗┻┛
  */
 
+const fs = require('fs');
 const gulp = require('gulp');
+const webpack = require('webpack');
 const merge2 = require('merge2'); // 流合并
 const rimraf = require('rimraf');
 const argv = require('minimist')(process.argv.slice(2)); // 解析参数
 
 const lessCompile = require('./compile/less-compile');
 const assetsCompile = require('./compile/assets-compile');
-const tsCompile = require('./compile/ts-compile');
+const {tsCompile, jsCompile} = require('./compile/ts-compile');
 
 const tsLintWrapper = require('./lint/ts-lint');
 
-const { getProjectPath, injectRequire, getConfig } = require('./utils/projectHelper');
+const { getProjectPath, getConfig } = require('./utils/projectHelper');
 
 const libDir = getProjectPath('lib');
 const esDir = getProjectPath('es');
@@ -64,7 +66,9 @@ const {
  * @param {*} done
  */
 function dist (done) {
-  rimraf.sync(getProjectPath(buildPath));
+  if (fs.existsSync(getProjectPath(buildPath))) {
+    rimraf.sync(getProjectPath(buildPath));
+  }
   process.env.RUN_ENV = 'PRODUCTION';
   const webpackConfig = require(getProjectPath(webpackConfigPath));
   webpack(webpackConfig, (err, stats) => {
@@ -122,12 +126,17 @@ function compile(modules) {
 
   const {tsFilesStream, tsd} = compileTs ? tsCompile({basePath, modules}) : {};
 
+  const js = jsCompile(basePath, modules);
+
   const streams = [];
 
   // 注意顺序
   less && streams.push(less);
   tsFilesStream && streams.push(tsFilesStream);
   tsd && streams.push(tsd);
+
+  streams.push(js);
+  
   assets && streams.push(assets);
 
   return merge2(streams);
@@ -148,14 +157,15 @@ gulp.task('clean', () => {
 gulp.task(
   'dist',
   gulp.series(done => {
+    console.log("dist");
     dist(done);
   })
 );
 
 // lint ts
-gulp.task('ts-lint', gulp.series(lintWrapper([], {basePath})));
+gulp.task('ts-lint', gulp.series(tsLintWrapper([], {basePath})));
 
-gulp.task('ts-lint-fix', gulp.series(lintWrapper(['--fix'], {basePath})));
+gulp.task('ts-lint-fix', gulp.series(tsLintWrapper(['--fix'], {basePath})));
 
 // fire-tools run compile
 gulp.task('compile-with-es', done => {

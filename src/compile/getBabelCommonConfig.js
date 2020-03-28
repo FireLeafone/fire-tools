@@ -1,6 +1,14 @@
-const { resolve } = require('../utils/projectHelper');
+const { resolve, getProjectPath } = require('../utils/projectHelper');
+const assign = require('object-assign');
 
 module.exports = function(modules) {
+  let my = {};
+  if (fs.existsSync(getProjectPath('.babelrc'))) {
+    my = require(getProjectPath('.babelrc'));
+  }
+  if (fs.existsSync(getProjectPath('babel.config.js'))) {
+    my = require(getProjectPath('babel.config.js'));
+  }
   const plugins = [
     [
       resolve('@babel/plugin-transform-typescript'),
@@ -31,26 +39,29 @@ module.exports = function(modules) {
     ],
     resolve('@babel/plugin-proposal-class-properties'),
   ];
-  return {
-    presets: [
-      resolve('@babel/preset-react'),
-      [
-        resolve('@babel/preset-env'),
-        {
-          modules,
-          targets: {
-            browsers: [
-              'last 2 versions',
-              'Firefox ESR',
-              '> 1%',
-              'ie >= 9',
-              'iOS >= 8',
-              'Android >= 4',
-            ],
+  return assign(
+    {
+      presets: [
+        resolve('@babel/preset-react'),
+        [
+          resolve('@babel/preset-env'),
+          {
+            modules,
+            targets: {
+              browsers: [
+                'last 2 versions',
+                'Firefox ESR',
+                '> 1%',
+                'ie >= 9',
+                'iOS >= 8',
+                'Android >= 4',
+              ],
+            },
           },
-        },
+        ],
       ],
-    ],
-    plugins,
-  };
+      plugins,
+    },
+    my
+  );
 };

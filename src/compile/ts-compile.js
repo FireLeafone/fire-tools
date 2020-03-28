@@ -96,4 +96,21 @@ function tsCompile (opt) {
   }
 }
 
-module.exports = tsCompile;
+function jsCompile (opt) {
+  const {basePath, modules} = opt;
+
+  const source = [
+    basePath + '/**/*.jsx',
+    basePath + '/**/*.js',
+    "!" + basePath + '/**/__tests__/**/*.js',
+    "!" + basePath + '/**/__test__/**/*.js',
+  ];
+
+  const js = babelify(gulp.src(source), modules);
+  return js;
+}
+
+module.exports = {
+  tsCompile,
+  jsCompile
+};

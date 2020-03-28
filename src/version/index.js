@@ -1,7 +1,7 @@
 /**
  * 版本相关
  */
-import updateNotifier from 'update-notifier';
+const updateNotifier = require('update-notifier');
 const pkg = require('../../package.json');
 
 function checkVersion() {

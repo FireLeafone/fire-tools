@@ -4,7 +4,7 @@
 
 const gulp = require("gulp");
 
-const { getProjectPath } = require('./utils/projectHelper');
+const { getProjectPath } = require('../utils/projectHelper');
 const libDir = getProjectPath('lib');
 const esDir = getProjectPath('es');
 
