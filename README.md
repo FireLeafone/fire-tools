@@ -14,5 +14,11 @@
 
 ## 输出
 
-- lib
-- es
+- lib：支持到ES5
+- es：支持ES6
+- dist：压缩文件
+
+## 文档
+
+- [babel-config](./docs/babelConfig.md)
+- [fire-tools-config](./docs/fireToolsConfig.md)

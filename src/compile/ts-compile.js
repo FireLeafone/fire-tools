@@ -5,6 +5,7 @@
 const gulp = require("gulp");
 const babel = require('gulp-babel');
 const ts = require('gulp-typescript');
+const through2 = require('through2');
 const stripCode = require('gulp-strip-code'); // 删除无用代码：环境，国际化等，
 const argv = require('minimist')(process.argv.slice(2)); // 解析参数
 
@@ -23,9 +24,11 @@ const tsDefaultReporter = ts.reporter.defaultReporter(); // 向控制台输出�
 function babelify(js, modules) {
   const babelConfig = getBabelCommonConfig(modules);
   delete babelConfig.cacheDirectory;
+
   if (modules === false) {
     babelConfig.plugins.push(replaceLib);
   }
+
   let stream = js.pipe(babel(babelConfig)).pipe(
     through2.obj(function z(file, encoding, next) {
       this.push(file.clone());
@@ -49,6 +52,7 @@ function babelify(js, modules) {
       }
     })
   );
+  
   if (modules === false) {
     stream = stream.pipe(
       stripCode({
@@ -106,7 +110,10 @@ function jsCompile (opt) {
     "!" + basePath + '/**/__test__/**/*.js',
   ];
 
+  console.log(source);
+
   const js = babelify(gulp.src(source), modules);
+  
   return js;
 }
 

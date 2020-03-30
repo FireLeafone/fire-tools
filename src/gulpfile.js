@@ -121,12 +121,9 @@ function compile(modules) {
   rimraf.sync(modules !== false ? libDir : esDir);
 
   const less = compileLess ? lessCompile({basePath, lessPath, modules}) : null;
-
   const assets = compileAssets ? assetsCompile({basePath, modules}) : null;
-
   const {tsFilesStream, tsd} = compileTs ? tsCompile({basePath, modules}) : {};
-
-  const js = jsCompile(basePath, modules);
+  const js = jsCompile({basePath, modules});
 
   const streams = [];
 
