@@ -6,7 +6,9 @@
 - `babel.config.js` (建议) : 需要特殊处理，`api && api.cache(true);`
 
 ```js
-const { resolve } = require('fire-tools/src/utils/projectHelper');
+function resolve(moduleName) {
+  return require.resolve(moduleName);
+}
 
 module.exports = function(modules) {
   const plugins = [
