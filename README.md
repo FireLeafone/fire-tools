@@ -13,7 +13,9 @@
 [fire-tools-url]: https://github.com/FireLeafone/fire-tools
 [fire-tools-img]: https://img.shields.io/badge/fire--tools-img-green
 [npm-url]: https://www.npmjs.com/package/fire-tools
+[npm-img]: https://img.shields.io/npm/v/axhr.svg
 [download-url]: https://www.npmjs.com/package/fire-tools
+[download-img]: https://img.shields.io/npm/dm/axhr.svg
 
 ## 使用
 
