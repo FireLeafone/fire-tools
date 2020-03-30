@@ -4,6 +4,25 @@
 
 [参考 antd-tools](https://github.com/ant-design/antd-tools)
 
+---
+
+[![fire-tools][fire-tools-img]][fire-tools-url]
+[![fire-tools version][npm-img]][npm-url]
+[![npm download][download-img]][download-url]
+
+[fire-tools-url]: https://github.com/FireLeafone/fire-tools
+[fire-tools-img]: https://img.shields.io/badge/fire--tools-img-green
+[npm-url]: https://www.npmjs.com/package/fire-tools
+[download-url]: https://www.npmjs.com/package/fire-tools
+
+## 使用
+
+```sh
+# 下载
+
+npm install -g fire-tools
+```
+
 ## 命令支持
 
 - `fire-tools run compile` 编译
