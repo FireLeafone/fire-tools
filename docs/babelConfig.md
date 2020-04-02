@@ -2,8 +2,7 @@
 
 > 配置babel, 需要进行require操作
 
-- `.babelrc`
-- `babel.config.js` (建议) : 需要特殊处理，`api && api.cache(true);`
+- `babelConfig.js` (本地) : 需要特殊处理，`api && api.cache(true);`, 进行 require 操作
 
 ```js
 function resolve(moduleName) {
@@ -64,4 +63,15 @@ module.exports = function(modules) {
     plugins,
   };
 };
+
+// webpack
+
+const babelConfig = require('babelConfig.js')();
+
+{
+  test: /\.jsx?$/,
+  exclude: /node_modules/,
+  loader: resolve('babel-loader'),
+  options: babelConfig,
+}
 ```

@@ -1,6 +1,6 @@
 {
   "name": "fire-tools",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "> 对于一些React 或 JS 项目，进行一些编译，打包等工作",
   "main": "index.js",
   "bin": {

@@ -154,7 +154,7 @@ gulp.task('clean', () => {
 gulp.task(
   'dist',
   gulp.series(done => {
-    console.log("dist");
+    console.log("dist start ...");
     dist(done);
   })
 );

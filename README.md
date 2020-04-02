@@ -43,3 +43,4 @@ npm install -g fire-tools
 
 - [babel-config](./docs/babelConfig.md)
 - [fire-tools-config](./docs/fireToolsConfig.md)
+- [更新日志](./CHANGELOG.md)

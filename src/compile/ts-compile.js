@@ -110,8 +110,6 @@ function jsCompile (opt) {
     "!" + basePath + '/**/__test__/**/*.js',
   ];
 
-  console.log(source);
-
   const js = babelify(gulp.src(source), modules);
   
   return js;
