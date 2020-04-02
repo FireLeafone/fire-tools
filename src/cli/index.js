@@ -9,7 +9,7 @@ const pkg = require('../../package.json');
 // fire-tools -v
 // fire-tools -h
 program.version(pkg.version, '-v, --version').usage('<command> [options]');
-program.command('run [name]', "run specified task"); // 如果存在，且没有显示调用action(fn)，就会启动子命令程序 fire-tools-run，否则会报错，
+program.command('run [name]', 'run specified task'); // 如果存在，且没有显示调用action(fn)，就会启动子命令程序 fire-tools-run，否则会报错，
 program.parse(process.argv);
 
 // https://github.com/tj/commander.js/pull/260

@@ -37,7 +37,7 @@ const argv = require('minimist')(process.argv.slice(2)); // 解析参数
 
 const lessCompile = require('./compile/less-compile');
 const assetsCompile = require('./compile/assets-compile');
-const {tsCompile, jsCompile} = require('./compile/ts-compile');
+const { tsCompile, jsCompile } = require('./compile/ts-compile');
 
 const tsLintWrapper = require('./lint/ts-lint');
 
@@ -49,7 +49,7 @@ const esDir = getProjectPath('es');
 /**
  * 获取全局tools配置
  */
-const { 
+const {
   basePath,
   buildPath,
   webpackConfigPath,
@@ -58,7 +58,7 @@ const {
   compileAssets,
   compileTs,
   distFin,
-  compileFin, 
+  compileFin,
 } = getConfig();
 
 /**
@@ -66,7 +66,7 @@ const {
  *
  * @param {*} done
  */
-function dist (done) {
+function dist(done) {
   if (fs.existsSync(getProjectPath(buildPath))) {
     rimraf.sync(getProjectPath(buildPath));
   }
@@ -121,10 +121,10 @@ function dist (done) {
 function compile(modules) {
   rimraf.sync(modules !== false ? libDir : esDir);
 
-  const less = compileLess ? lessCompile({basePath, lessPath, modules}) : null;
-  const assets = compileAssets ? assetsCompile({basePath, modules}) : null;
-  const {tsFilesStream, tsd} = compileTs ? tsCompile({basePath, modules}) : {};
-  const js = jsCompile({basePath, modules});
+  const less = compileLess ? lessCompile({ basePath, lessPath, modules }) : null;
+  const assets = compileAssets ? assetsCompile({ basePath, modules }) : null;
+  const { tsFilesStream, tsd } = compileTs ? tsCompile({ basePath, modules }) : {};
+  const js = jsCompile({ basePath, modules });
 
   const streams = [];
 
@@ -134,7 +134,7 @@ function compile(modules) {
   if (tsd) streams.push(tsd);
 
   streams.push(js);
-  
+
   if (assets) streams.push(assets);
 
   return merge2(streams);
@@ -154,29 +154,29 @@ gulp.task('clean', () => {
 // fire-tools run dist
 gulp.task(
   'dist',
-  gulp.series(done => {
-    console.log("dist start ...");
+  gulp.series((done) => {
+    console.log('dist start ...');
     dist(done);
   })
 );
 
 // lint ts
-gulp.task('ts-lint', gulp.series(tsLintWrapper([], {basePath})));
+gulp.task('ts-lint', gulp.series(tsLintWrapper([], { basePath })));
 
-gulp.task('ts-lint-fix', gulp.series(tsLintWrapper(['--fix'], {basePath})));
+gulp.task('ts-lint-fix', gulp.series(tsLintWrapper(['--fix'], { basePath })));
 
 // fire-tools run compile
-gulp.task('compile-with-es', done => {
+gulp.task('compile-with-es', (done) => {
   console.log('[Parallel] Compile to es...');
   compile(false).on('finish', done);
 });
 
-gulp.task('compile-with-lib', done => {
+gulp.task('compile-with-lib', (done) => {
   console.log('[Parallel] Compile to js...');
   compile().on('finish', done);
 });
 
-gulp.task('compile-finalize', done => {
+gulp.task('compile-finalize', (done) => {
   // Additional process of compile finalize
   if (compileFin.finalize) {
     console.log('[Compile] Finalization...');

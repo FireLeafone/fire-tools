@@ -16,7 +16,7 @@ program.parse(process.argv);
 
 function runTask(toRun) {
   version.checkVersion();
-  
+
   const metadata = { task: toRun };
   // Gulp >= 4.0.0 (doesn't support events)
   const taskInstance = gulp.task(toRun); // 执行命令任务

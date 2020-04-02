@@ -5,9 +5,9 @@ const assign = require('object-assign');
 const cwd = process.cwd(); // 方法返回 Node.js 进程的当前工作目录
 
 const defaultProjectConfig = {
-  basePath: "src", // 源代码基本路径
-  buildPath: "dist", // 打包路径
-  webpackConfigPath: "webpack.config.js", // webpack 配置路径
+  basePath: 'src', // 源代码基本路径
+  buildPath: 'dist', // 打包路径
+  webpackConfigPath: 'webpack.config.js', // webpack 配置路径
   lessPath: [], // 编译的less相对src路径，正则形式 /(\/|\\)style(\/|\\)index\.less$/
   compileLess: false, // 默认不编译
   compileAssets: false, // 默认不编译
@@ -18,7 +18,7 @@ const defaultProjectConfig = {
   compile: {
     finalize: () => {}, // 最后补充compile
   },
-}
+};
 
 function getProjectPath(...filePath) {
   const ss = path.join(cwd, ...filePath);
@@ -38,7 +38,7 @@ function injectRequire() {
   const Module = require('module');
 
   const oriRequire = Module.prototype.require;
-  Module.prototype.require = function(...args) {
+  Module.prototype.require = function (...args) {
     const moduleName = args[0];
     try {
       return oriRequire.apply(this, args);

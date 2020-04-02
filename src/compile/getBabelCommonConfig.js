@@ -1,13 +1,13 @@
 const fs = require('fs');
-const {getProjectPath, resolve} = require('../utils/projectHelper');
+const { getProjectPath, resolve } = require('../utils/projectHelper');
 
-module.exports = function(modules) {
+module.exports = function (modules) {
   let my = {};
 
   if (fs.existsSync(getProjectPath('babelConfig.js'))) {
     my = require(getProjectPath('babelConfig.js'))(modules);
     return my;
-  } 
+  }
   const plugins = [
     [
       resolve('@babel/plugin-transform-typescript'),

@@ -1,7 +1,7 @@
 /**
  * less 编译
  */
-const gulp = require("gulp");
+const gulp = require('gulp');
 const through2 = require('through2'); // 处理 node 的 stream
 const less = require('less');
 const { readFileSync } = require('fs');
@@ -31,28 +31,26 @@ function transformLess(lessFile, config = {}) {
   };
   return less
     .render(data, lessOpts)
-    .then(result => postcss(postcssConfig.plugins).process(result.css, { from: undefined }))
-    .then(r => r.css);
+    .then((result) => postcss(postcssConfig.plugins).process(result.css, { from: undefined }))
+    .then((r) => r.css);
 }
 
-function lessCompile (opt) {
-  const {basePath, lessPath, modules} = opt
+function lessCompile(opt) {
+  const { basePath, lessPath, modules } = opt;
   return gulp
-    .src([(`${basePath || "src"  }/**/*.less`)])
+    .src([`${basePath || 'src'}/**/*.less`])
     .pipe(
-      through2.obj(function(file, encoding, next) {
+      through2.obj(function (file, encoding, next) {
         this.push(file.clone());
-        if (
-          lessPath && lessPath.length && lessPath.find(p => file.path.match(p))
-        ) {
+        if (lessPath && lessPath.length && lessPath.find((p) => file.path.match(p))) {
           transformLess(file.path)
-            .then(css => {
+            .then((css) => {
               file.contents = Buffer.from(css);
               file.path = file.path.replace(/\.less$/, '.css');
               this.push(file);
               next();
             })
-            .catch(e => {
+            .catch((e) => {
               console.error(e);
             });
         } else {
