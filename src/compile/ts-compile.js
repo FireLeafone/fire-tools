@@ -8,13 +8,12 @@ const ts = require('gulp-typescript');
 const through2 = require('through2');
 const stripCode = require('gulp-strip-code'); // 删除无用代码：环境，国际化等，
 const argv = require('minimist')(process.argv.slice(2)); // 解析参数
-
 const tsConfig = require('./getTSCommonConfig')();
 const getBabelCommonConfig = require('./getBabelCommonConfig');
 const replaceLib = require('./replaceLib');
-
 const { getProjectPath } = require('../utils/projectHelper');
 const { cssInjection } = require('../utils/styleUtil');
+
 const libDir = getProjectPath('lib');
 const esDir = getProjectPath('es');
 
@@ -68,10 +67,10 @@ function tsCompile (opt) {
   const {basePath, modules} = opt;
 
   let error = 0;
-  const source = [basePath + '/**/*.tsx', basePath + '/**/*.ts', basePath + '/**/*.d.ts'];
+  const source = [(`${basePath  }/**/*.tsx`), (`${basePath  }/**/*.ts`), (`${basePath  }/**/*.d.ts`)];
   // allow jsx file in basePath/xxx/
   if (tsConfig.allowJs) {
-    source.unshift(basePath + '/**/*.jsx');
+    source.unshift(`${basePath  }/**/*.jsx`);
   }
   const tsResult = gulp.src(source).pipe(
     ts(tsConfig, {
@@ -96,7 +95,7 @@ function tsCompile (opt) {
 
   return {
     tsFilesStream, 
-    tsd
+    tsd,
   }
 }
 
@@ -104,10 +103,10 @@ function jsCompile (opt) {
   const {basePath, modules} = opt;
 
   const source = [
-    basePath + '/**/*.jsx',
-    basePath + '/**/*.js',
-    "!" + basePath + '/**/__tests__/**/*.js',
-    "!" + basePath + '/**/__test__/**/*.js',
+    `${basePath  }/**/*.jsx`,
+    `${basePath  }/**/*.js`,
+    `!${  basePath  }/**/__tests__/**/*.js`,
+    `!${  basePath  }/**/__test__/**/*.js`,
   ];
 
   const js = babelify(gulp.src(source), modules);
@@ -117,5 +116,5 @@ function jsCompile (opt) {
 
 module.exports = {
   tsCompile,
-  jsCompile
+  jsCompile,
 };

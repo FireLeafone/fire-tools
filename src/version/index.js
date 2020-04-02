@@ -13,5 +13,5 @@ function checkVersion() {
 }
 
 module.exports = {
-  checkVersion
+  checkVersion,
 }

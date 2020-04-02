@@ -9,8 +9,8 @@ const path = require('path');
 const postcss = require('postcss');
 const NpmImportPlugin = require('less-plugin-npm-import');
 const postcssConfig = require('./postcssConfig');
-
 const { getProjectPath } = require('../utils/projectHelper');
+
 const libDir = getProjectPath('lib');
 const esDir = getProjectPath('es');
 
@@ -38,7 +38,7 @@ function transformLess(lessFile, config = {}) {
 function lessCompile (opt) {
   const {basePath, lessPath, modules} = opt
   return gulp
-    .src([(basePath || "src") + '/**/*.less'])
+    .src([(`${basePath || "src"  }/**/*.less`)])
     .pipe(
       through2.obj(function(file, encoding, next) {
         this.push(file.clone());

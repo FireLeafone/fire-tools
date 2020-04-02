@@ -57,7 +57,8 @@ const {
   compileLess,
   compileAssets,
   compileTs,
-  dist: { finalize } = {} 
+  distFin,
+  compileFin, 
 } = getConfig();
 
 /**
@@ -102,9 +103,9 @@ function dist (done) {
     console.log(buildInfo);
 
     // 最后补充dist
-    if (finalize) {
+    if (distFin.finalize) {
       console.log('[Dist] Finalization...');
-      finalize();
+      distFin.finalize();
     }
 
     done(0);
@@ -128,13 +129,13 @@ function compile(modules) {
   const streams = [];
 
   // 注意顺序
-  less && streams.push(less);
-  tsFilesStream && streams.push(tsFilesStream);
-  tsd && streams.push(tsd);
+  if (less) streams.push(less);
+  if (tsFilesStream) streams.push(tsFilesStream);
+  if (tsd) streams.push(tsd);
 
   streams.push(js);
   
-  assets && streams.push(assets);
+  if (assets) streams.push(assets);
 
   return merge2(streams);
 }
@@ -143,11 +144,11 @@ function compile(modules) {
 
 // fire-tools run clean
 gulp.task('clean', () => {
-  const fileName = argv["f"];
+  const fileName = argv.f;
   rimraf.sync(getProjectPath('lib'));
   rimraf.sync(getProjectPath('es'));
   rimraf.sync(getProjectPath('dist'));
-  fileName && rimraf.sync(getProjectPath(fileName));
+  if (fileName) rimraf.sync(getProjectPath(fileName));
 });
 
 // fire-tools run dist
@@ -177,10 +178,9 @@ gulp.task('compile-with-lib', done => {
 
 gulp.task('compile-finalize', done => {
   // Additional process of compile finalize
-  const { compile: { finalize } = {} } = getConfig();
-  if (finalize) {
+  if (compileFin.finalize) {
     console.log('[Compile] Finalization...');
-    finalize();
+    compileFin.finalize();
   }
   done();
 });

@@ -1,6 +1,6 @@
 {
   "name": "fire-tools",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "> 对于一些React 或 JS 项目，进行一些编译，打包等工作",
   "main": "index.js",
   "bin": {
@@ -8,7 +8,10 @@
     "fire-tools-run": "./bin/fire-tools-run.js"
   },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "pub": "npm run lint && git push origin && npm publish",
+    "lint": "eslint --fix src",
+    "prettier": "node ./script/prettier.js"
   },
   "repository": {
     "type": "git",
@@ -52,17 +55,35 @@
     "minimist": "^1.2.5",
     "object-assign": "^4.1.1",
     "postcss": "^7.0.27",
+    "prettier": "^2.0.2",
     "rimraf": "^3.0.2",
     "rucksack-css": "^1.0.2",
     "through2": "^3.0.1",
-    "tslint": "^6.1.0",
+    "tslint": "^6.1.1",
+    "tslint-config-prettier": "^1.18.0",
+    "tslint-eslint-rules": "^5.4.0",
+    "tslint-react": "^4.2.0",
     "typescript": "^3.8.3",
     "update-notifier": "^4.1.0",
     "webpack": "^4.42.1",
     "webpack-filter-warnings-plugin": "^1.2.1",
     "webpack-merge": "^4.2.2"
   },
+  "devDependencies": {
+    "babel-eslint": "^10.1.0",
+    "eslint": "^6.8.0",
+    "eslint-config-airbnb": "^18.1.0",
+    "eslint-config-prettier": "^6.10.1",
+    "eslint-plugin-import": "^2.20.2",
+    "eslint-plugin-jsx-a11y": "^6.2.3",
+    "eslint-plugin-react": "^7.19.0",
+    "pre-commit": "^1.2.2"
+  },
   "peerDependencies": {
     "typescript": ">=3.5.2"
-  }
+  },
+  "pre-commit": [
+    "lint",
+    "prettier"
+  ]
 }

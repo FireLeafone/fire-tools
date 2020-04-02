@@ -13,11 +13,11 @@ const defaultProjectConfig = {
   compileAssets: false, // 默认不编译
   compileTs: false, // 默认不编译 tsconfig.json配置在根目录
   dist: {
-    finalize: () => {} // 最后补充dist
+    finalize: () => {}, // 最后补充dist
   },
   compile: {
-    finalize: () => {} // 最后补充compile
-  }
+    finalize: () => {}, // 最后补充compile
+  },
 }
 
 function getProjectPath(...filePath) {
