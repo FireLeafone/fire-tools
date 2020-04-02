@@ -103,7 +103,7 @@ function dist(done) {
     console.log(buildInfo);
 
     // 最后补充dist
-    if (distFin.finalize) {
+    if (distFin && distFin.finalize) {
       console.log('[Dist] Finalization...');
       distFin.finalize();
     }
@@ -132,7 +132,7 @@ function compile(modules) {
   if (less) streams.push(less);
   if (tsFilesStream) streams.push(tsFilesStream);
   if (tsd) streams.push(tsd);
-
+  
   streams.push(js);
 
   if (assets) streams.push(assets);
@@ -178,7 +178,7 @@ gulp.task('compile-with-lib', (done) => {
 
 gulp.task('compile-finalize', (done) => {
   // Additional process of compile finalize
-  if (compileFin.finalize) {
+  if (compileFin && compileFin.finalize) {
     console.log('[Compile] Finalization...');
     compileFin.finalize();
   }

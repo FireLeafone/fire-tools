@@ -12,10 +12,10 @@ const defaultProjectConfig = {
   compileLess: false, // 默认不编译
   compileAssets: false, // 默认不编译
   compileTs: false, // 默认不编译 tsconfig.json配置在根目录
-  dist: {
+  distFin: {
     finalize: () => {}, // 最后补充dist
   },
-  compile: {
+  compileFin: {
     finalize: () => {}, // 最后补充compile
   },
 };
