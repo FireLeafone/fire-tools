@@ -22,7 +22,7 @@
 ```sh
 # 下载
 
-npm install -g fire-tools
+npm install --save fire-tools
 ```
 
 ## 命令支持

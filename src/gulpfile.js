@@ -72,8 +72,10 @@ function dist(done) {
   }
   process.env.RUN_ENV = 'PRODUCTION';
   const webpackConfig = require(getProjectPath(webpackConfigPath));
+  console.log(0);
   webpack(webpackConfig, (err, stats) => {
     if (err) {
+      console.log(1);
       console.error(err.stack || err);
       if (err.details) {
         console.error(err.details);
@@ -172,7 +174,7 @@ gulp.task('compile-with-es', (done) => {
 });
 
 gulp.task('compile-with-lib', (done) => {
-  console.log('[Parallel] Compile to js...');
+  console.log('[Parallel] Compile to lib...');
   compile().on('finish', done);
 });
 

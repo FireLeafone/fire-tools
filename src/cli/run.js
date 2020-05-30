@@ -34,6 +34,7 @@ function runTask(toRun) {
   } catch (err) {
     err.hrDuration = process.hrtime(start);
     err.task = metadata.task;
+    console.log(err)
     gulp.emit('task_err', err);
   }
 }
